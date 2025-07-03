@@ -1,0 +1,1 @@
+readonly_role_name = "readonly-role"
