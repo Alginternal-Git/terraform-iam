@@ -24,5 +24,3 @@ terraform-iam/
 │       └── deploy-backend.yml   #  to create the state bucket via CI
 │
 └── README.md
-
->>>>>>> c937b2105f6a28ec068ca7964771f36939e630da
