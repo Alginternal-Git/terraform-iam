@@ -32,6 +32,22 @@ jobs:
         working-directory: ${{ env.TF_WORKING_DIR }}
         run: terraform init
 
+      - name: Download Infracost CLI
+        uses: infracost/actions/setup@v2
+
+      - name: Generate Infracost Cost Estimate
+        run: |
+          infracost breakdown \
+            --path=${{ env.TF_WORKING_DIR }} \
+            --terraform-var-file=${{ env.TF_WORKING_DIR }}/terraform.tfvars \
+            --format=table \
+            --out-file=/tmp/infracost.json
+        env:
+          INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+
+      - name: Show Infracost Output
+        run: cat /tmp/infracost.json
+
       - name: Terraform Apply
         working-directory: ${{ env.TF_WORKING_DIR }}
         run: terraform apply -auto-approve -var-file="terraform.tfvars"
